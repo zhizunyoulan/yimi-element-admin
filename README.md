@@ -10,7 +10,7 @@
 `VueElementAdmin`
 `RuoYi-Vue`
 
-[文档地址]: http://yimi.uublue.com
+[文档地址](http://yimi.uublue.com)
 
 ## Project setup
 
@@ -39,7 +39,7 @@ npm run lint
 ---
 
 <p>
-    Yimi Element是一个基于Element
+    <a target="_blank" style="color: #409eff" href="https://www.npmjs.com/package/@uublue/yimi-element">Yimi Element</a>是一个基于Element
     UI的组件增强库，封装了多种通用、易用的增强组件。
 </p>
 
