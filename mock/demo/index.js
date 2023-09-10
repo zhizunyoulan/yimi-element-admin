@@ -1,8 +1,9 @@
-const components = require('./components')
+const table = require('./table')
+const operation = require('./operation')
 
 const mocks = [
-  ...components
+  ...table,
+  ...operation
 ]
 
 module.exports = mocks
-  

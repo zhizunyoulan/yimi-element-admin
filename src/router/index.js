@@ -56,6 +56,32 @@ export const constantRoutes = [
             }
         ]
     },
+    {
+      path: '/demos',
+      component: VeaLayout,
+      name: '组件演示',
+      meta: { title: '组件演示', icon: 'el-icon-setting' },
+      children: [
+          {
+              path: 'table',
+              component: () => import('@/views/demos/yi-table'),
+              name: 'Table',
+              meta: { title: '表格', affix: false }
+          },
+          {
+              path: 'operation',
+              component: () => import('@/views/demos/yi-operation'),
+              name: 'Operation',
+              meta: { title: '操作', affix: false }
+          },
+          {
+              path: 'modal-trigger',
+              component: () => import('@/views/demos/yi-modal-trigger'),
+              name: 'ModalTrigger',
+              meta: { title: '模态框', affix: false }
+          }
+      ]
+  },
     
 ]
 
