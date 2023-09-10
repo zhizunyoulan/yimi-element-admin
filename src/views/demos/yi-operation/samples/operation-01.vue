@@ -3,13 +3,12 @@
     text="新增"
     icon="icon-plus"
     :api-config="({data, params}) => {
-        if(data) {
-            if(data.password != data.passwordRepeat) {
-                throw '密码不一致'
-            }else {
-                delete data.passwordRepeat
-            }
+        if(data.password != data.passwordRepeat) {
+            throw '密码不一致'
+        }else {
+            delete data.passwordRepeat
         }
+
         return {
             url: '/demo/user',
             method: 'post',
