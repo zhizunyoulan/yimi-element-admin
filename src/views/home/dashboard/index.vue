@@ -2,11 +2,17 @@
   <!-- 预览文件 -->
   <div class="app-container home">
     <el-row :gutter="20">
-      <el-col :sm="24" :lg="12" style="padding-left: 20px">
-        <h2>Yimi Element Admin</h2>
+      <el-col :sm="12" :lg="12" style="padding-left: 20px">
+        <a
+          target="_blank"
+          style="color: #409eff"
+          href="https://gitee.com/uublue/yimi-element-admin"
+        >
+          <h2>Yimi Element Admin<i class="el-icon-link" /></h2>
+        </a>
         <p>
           Yimi Element Admin是一个Vue 2.x的快速开发框架，基于Element
-          UI，封装了多种通用、易用的增强组件，预开发了后台管理系统常用的一些功能页面，能为各种后台管理系统的开发提供极大的便利。
+          UI，预开发了后台管理系统常用的一些功能页面，能为各种后台管理系统的开发提供极大的便利。
         </p>
         <p>
           另外，该项目也学习了其他一些开源项目中的优秀设计，在此向以下项目表示感谢！
@@ -14,11 +20,38 @@
         <el-tag type="info" size="mini">VueElementAdmin</el-tag>
         <el-tag type="info" size="mini">RuoYi-Vue</el-tag>
         <p>更多内容将陆续加入！</p>
-        <p>
-          <b>当前版本:</b> <span>v{{ version }}</span>
-        </p>
+        <p><b>当前版本:</b> <span>v0.1.0</span></p>
         <p>
           <el-tag type="danger">&yen;免费开源</el-tag>
+        </p>
+        <p>
+          <el-button
+            size="mini"
+            icon="el-icon-s-home"
+            plain
+            @click="openPage('http://yimi.uublue.com')"
+            >文档</el-button
+          >
+        </p>
+      </el-col>
+
+      <el-col :sm="12" :lg="12" style="padding-left: 20px">
+        <a
+          target="_blank"
+          style="color: #409eff"
+          href="https://www.npmjs.com/package/@uublue/yimi-element"
+        >
+          <h2>Yimi Element<i class="el-icon-link" /></h2>
+        </a>
+        <p>
+          Yimi Element是一个基于Element
+          UI的组件增强库，封装了多种通用、易用的增强组件。
+        </p>
+
+        <p>更多组件将陆续加入！</p>
+        <p><b>当前版本:</b> <span>v0.1.1</span></p>
+        <p>
+          <el-tag type="danger">&yen;免费使用</el-tag>
         </p>
       </el-col>
     </el-row>
@@ -37,7 +70,7 @@
               width="100%"
             />
             <span style="display: inline-block; height: 30px; line-height: 30px"
-              >您的关注，将会给与我更多动力</span
+              >如有疑问，可以关注公众号留言</span
             >
           </div>
         </el-card>
@@ -47,16 +80,12 @@
 </template>
 
 <script>
-
 export default {
   name: "Dashboard",
-  data() {
-    return {
-      // 版本号
-      version: "0.1.0",
-    };
-  },
   methods: {
+    openPage(href) {
+      window.open(href, "_blank");
+    },
   },
 };
 </script>
