@@ -22,7 +22,7 @@
 <script>
 import { AppMain, Navbar, Settings, Sidebar, TagsView } from "./components";
 import ResizeMixin from "./mixin/ResizeHandler";
-import { mapState } from "vuex";
+import { mapState, mapActions } from "vuex";
 
 export default {
   name: "VeaLayout",
@@ -63,7 +63,13 @@ export default {
       };
     },
   },
+  mounted() {
+    this.$nextTick(() => {
+      this.initBaseInfos();
+    })
+  },
   methods: {
+    ...mapActions("baseInfo", ["initBaseInfos"]),
     handleClickOutside() {
       this.$store.dispatch("app/closeSideBar", { withoutAnimation: false });
     },
