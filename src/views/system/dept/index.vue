@@ -82,7 +82,7 @@
             text="修改"
             size="mini"
             icon="el-icon-edit"
-            :form-data="row"
+            :form-model="row"
             modal-title="修改部门"
             dialog-width="500px"
             @on-submit-success="(formModel) => {
