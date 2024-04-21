@@ -5,18 +5,18 @@ module.exports = [
       url: '/user/page',
       type: 'get',
       response: (config) => {
-        const { nickName, phone, createTimeBegin, deptId, createTimeEnd, pageSize = 10, pageNum = 1 } = config.query
+        const { realName, contactNumber, createTimeBegin, deptId, createTimeEnd, pageSize = 10, pageNum = 1 } = config.query
 
         let {pageList, total} = filterAndSortAndPage(users, {
           sample: {
-            nickName: '~',
-            phone: '=',
+            realName: '~',
+            contactNumber: '=',
             createTime: '[]',
             deptId: '='
           },
           query: {
-            nickName,
-            phone,
+            realName,
+            contactNumber,
             createTimeBegin,
             createTimeEnd,
             deptId

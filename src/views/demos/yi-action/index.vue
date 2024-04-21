@@ -2,19 +2,19 @@
   <div class="yimi-main">
     <el-row>
       <el-col :span="2">
-        <operation01 />
+        <action01 />
       </el-col>
     </el-row>
   </div>
 </template>
 <script>
-import Operation01 from './samples/operation-01.vue'
+import Action01 from './samples/action-01.vue'
 export default {
   pageInfo: {
     title: "操作样例",
     // permission: 'demo:operation:view'
   },
-  components: {Operation01},
+  components: {Action01},
   data() {
     return {
     };

@@ -1,19 +1,21 @@
 <template>
   <yi-table
-    :api-config="{
+    :api="{
       url: '/demo/score-details',
     }"
     :columns="columns"
     show-summary
   >
-    <template #search-form="{ model, refresh }">
-      <el-form-item label="姓名">
-        <el-input v-model="model.name"></el-input>
-      </el-form-item>
+    <template #search-bar="{ model, refresh }">
+      <el-form :model="model" inline>
+        <el-form-item label="姓名">
+          <el-input v-model="model.name"></el-input>
+        </el-form-item>
 
-      <el-form-item>
-        <el-button type="primary" @click="refresh">查询</el-button>
-      </el-form-item>
+        <el-form-item>
+          <el-button type="primary" @click="refresh">查询</el-button>
+        </el-form-item>
+      </el-form>
     </template>
     <template #name="{ value }">
       <el-link type="warning" :underline="false">{{ value }}</el-link>

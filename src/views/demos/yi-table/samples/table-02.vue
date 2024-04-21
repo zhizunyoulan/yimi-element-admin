@@ -1,6 +1,6 @@
 <template>
   <yi-table
-    :api-config="{
+    :api="{
       url: '/demo/scores',
     }"
     :columns="columns"

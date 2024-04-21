@@ -9,8 +9,9 @@ import httpClient from '@/utils/request'
 export default {
   name: "App",
   provide: {
-    'yimi-http-client': httpClient
-    // "yimi-operation-on-submit": () => {
+    'yimi-table-axios': httpClient,
+    'yimi-action-axios': httpClient,
+    // "yimi-on-action-submit": () => {
     //   Message({
     //     type: "error",
     //     message: "演示环境， 不允许操作",
@@ -20,7 +21,7 @@ export default {
     // "yimi-table-model-merger": ({ data, params }, model) => {
     //   Object.assign(data, model);
     // },
-    // "yimi-table-pageinfo-merger": (
+    // "yimi-table-page-merger": (
     //   { data, params },
     //   { pageSize, currentPage }
     // ) => {

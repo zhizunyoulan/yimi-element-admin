@@ -2,7 +2,7 @@
   <div class="app-container">
     <yi-table
       ref="pageApiTable"
-      :api-config="apis.queryPageApis"
+      :api="apis.queryPageApis"
       :columns="[
         {
           label: '接口名称',
@@ -35,22 +35,24 @@
         },
       ]"
     >
-      <template #search-form="{ model, refresh }">
-        <el-form-item label="接口名称">
-          <el-input
-            v-model="model.name"
-            placeholder="请输入接口名称"
-          ></el-input>
-        </el-form-item>
-        <el-form-item>
-          <el-button type="primary" size="mini" @click="refresh"
-            >查询</el-button
-          >
-        </el-form-item>
+      <template #search-bar="{ model, refresh }">
+        <el-form :model="model" inline>
+          <el-form-item label="接口名称">
+            <el-input
+              v-model="model.name"
+              placeholder="请输入接口名称"
+            ></el-input>
+          </el-form-item>
+          <el-form-item>
+            <el-button type="primary" size="mini" @click="refresh"
+              >查询</el-button
+            >
+          </el-form-item>
+        </el-form>
       </template>
-      <template #tool-bar="{ refresh }">
-        <yi-operation
-          :api-config="apis.syncPageApis"
+      <template #action-bar="{ refresh }">
+        <yi-action
+          :api="apis.syncPageApis"
           text="页面扫描"
           type="danger"
           size="mini"
@@ -94,7 +96,7 @@
                   $slot: 'apis',
                 },
               ]"
-              :right-tools="[]"
+              :tools="[]"
               default-expand-all
               :data="filterPages"
             >
@@ -107,7 +109,7 @@
               </template>
             </yi-table>
           </template>
-        </yi-operation>
+        </yi-action>
       </template>
       <template #name="{ row, value }">
         <span v-if="value">{{ value }}</span>
@@ -156,14 +158,13 @@ export default {
   },
   components: { ApiDisplay, SecurityDisplay },
   data() {
-    return {
-    };
+    return {};
   },
   computed: {
-    ...mapGetters('page', ['pages']),
-    filterPages(){
+    ...mapGetters("page", ["pages"]),
+    filterPages() {
       return this.pages.filter((page) => Array.isArray(page.apis));
-    }
+    },
   },
   methods: {
     parsePagesToApis() {

@@ -19,7 +19,7 @@ export const constantRoutes = [
                 path: 'dashboard',
                 component: Dashboard,
                 name: '首页',
-                meta: { title: '首页', icon: 'el-icon-folder-opened', affix: true }
+                meta: { title: '首页', icon: 'el-icon-s-home', affix: true }
             },
         ]
     }
@@ -69,7 +69,7 @@ export const dynamicRoutes = [
         path: '/demos',
         component: VeaLayout,
         name: '组件演示',
-        meta: { title: '组件演示', icon: 'el-icon-setting' },
+        meta: { title: '组件演示', icon: 'el-icon-guide' },
         children: [
             {
                 path: 'table',
@@ -78,14 +78,14 @@ export const dynamicRoutes = [
                 meta: { title: '表格', affix: false }
             },
             {
-                path: 'operation',
-                component: () => import('@/views/demos/yi-operation'),
+                path: 'action',
+                component: () => import('@/views/demos/yi-action'),
                 name: '操作',
                 meta: { title: '操作', affix: false }
             },
             {
-                path: 'modal-trigger',
-                component: () => import('@/views/demos/yi-modal-trigger'),
+                path: 'modal',
+                component: () => import('@/views/demos/yi-modal'),
                 name: '模态框',
                 meta: { title: '模态框', affix: false }
             }

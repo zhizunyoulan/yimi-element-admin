@@ -64,7 +64,7 @@
       <el-col :span="19" :xs="24">
         <yi-table
           ref="userTable"
-          :api-config="apis.queryUser"
+          :api="apis.queryUser"
           :model-merger="
             ({ data, params }, model) => {
               if (Array.isArray(model.createTime)) {
@@ -132,46 +132,48 @@
             }
           "
         >
-          <template #search-form="{ model, refresh }">
-            <el-form-item label="用户名称">
-              <el-input
-                v-model="model.realName"
-                size="mini"
-                clearable
-                placeholder="输入用户名称"
-              ></el-input>
-            </el-form-item>
-            <el-form-item label="联系方式">
-              <el-input
-                v-model="model.contactNumber"
-                size="mini"
-                clearable
-                placeholder="输入联系方式"
-              ></el-input>
-            </el-form-item>
+          <template #search-bar="{ model, refresh }">
+            <el-form :model="model" inline>
+              <el-form-item label="用户名称">
+                <el-input
+                  v-model="model.realName"
+                  size="mini"
+                  clearable
+                  placeholder="输入用户名称"
+                ></el-input>
+              </el-form-item>
+              <el-form-item label="联系方式">
+                <el-input
+                  v-model="model.contactNumber"
+                  size="mini"
+                  clearable
+                  placeholder="输入联系方式"
+                ></el-input>
+              </el-form-item>
 
-            <el-form-item label="创建时间">
-              <el-date-picker
-                v-model="model.createTime"
-                style="width: 240px"
-                value-format="yyyy-MM-dd"
-                type="daterange"
-                range-separator="-"
-                start-placeholder="开始日期"
-                end-placeholder="结束日期"
-              ></el-date-picker>
-            </el-form-item>
+              <el-form-item label="创建时间">
+                <el-date-picker
+                  v-model="model.createTime"
+                  style="width: 240px"
+                  value-format="yyyy-MM-dd"
+                  type="daterange"
+                  range-separator="-"
+                  start-placeholder="开始日期"
+                  end-placeholder="结束日期"
+                ></el-date-picker>
+              </el-form-item>
 
-            <el-form-item>
-              <el-button type="primary" size="mini" @click="refresh"
-                >查询</el-button
-              >
-            </el-form-item>
+              <el-form-item>
+                <el-button type="primary" size="mini" @click="refresh"
+                  >查询</el-button
+                >
+              </el-form-item>
+            </el-form>
           </template>
-          <template #tool-bar="{ refresh }">
+          <template #action-bar="{ refresh }">
             <el-col :span="1.5">
-              <yi-operation
-                :api-config="apis.addUser"
+              <yi-action
+                :api="apis.addUser"
                 plain
                 text="添加"
                 type="primary"
@@ -190,7 +192,7 @@
                     :dept-options="deptOptions"
                   />
                 </template>
-              </yi-operation>
+              </yi-action>
             </el-col>
           </template>
 
@@ -202,18 +204,18 @@
           </template>
           <template #opt="{ row, refresh }">
             <!-- 编辑 -->
-            <yi-operation
+            <yi-action
               title="修改用户"
-              :api-config="apis.updateUser"
+              :api="apis.updateUser"
               type="text"
               text="编辑"
               size="mini"
               icon="el-icon-edit"
-              :form-model="row"
+              :model="row"
               modal-title="修改用户"
               dialog-width="650px"
               @on-submit-success="
-                (formModel) => {
+                (res, formModel) => {
                   Object.assign(row, formModel);
                 }
               "
@@ -225,11 +227,11 @@
                   use-for="edit"
                 />
               </template>
-            </yi-operation>
+            </yi-action>
 
-            <yi-operation
+            <yi-action
               title="删除用户"
-              :api-config="apis.removeUser(row.id)"
+              :api="apis.removeUser(row.id)"
               type="text"
               text="删除"
               size="mini"

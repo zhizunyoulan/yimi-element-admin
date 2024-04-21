@@ -4,8 +4,8 @@
       <!--菜单数据-->
       <el-col :span="16" :xs="0">
         <yi-table
-          :api-config="apis.getMenuTree"
-          :right-tools="['refresh']"
+          :api="apis.getMenuTree"
+          :tools="['refresh']"
           :columns="[
             {
               label: '菜单名称',
@@ -57,7 +57,7 @@
           ]"
           default-expand-all
           highlight-current-row
-          :paging="false"
+          :paged="false"
           @query-success="
             (res) => {
               setMenuOptions(res);
@@ -74,11 +74,11 @@
             }
           "
         >
-          <template #tool-bar="{ refresh, el }">
+          <template #action-bar="{ refresh, el }">
             <el-col :span="1.5">
               <!-- 添加 -->
-              <yi-operation
-                :api-config="apis.addMenu"
+              <yi-action
+                :api="apis.addMenu"
                 text="新增"
                 type="primary"
                 size="mini"
@@ -95,7 +95,7 @@
                     use-for="add"
                   />
                 </template>
-              </yi-operation>
+              </yi-action>
             </el-col>
 
             <el-col :span="1.5">
@@ -109,8 +109,8 @@
               >
             </el-col>
             <el-col :span="1.5">
-              <yi-operation
-                :api-config="apis.initMenu"
+              <yi-action
+                :api="apis.initMenu"
                 text="菜单初始化"
                 type="danger"
                 size="mini"
@@ -152,7 +152,7 @@
                         $slot: 'pagePath',
                       },
                     ]"
-                    :right-tools="[]"
+                    :tools="[]"
                     default-expand-all
                     :data="initialMenu"
                   >
@@ -174,7 +174,7 @@
                     </template>
                   </yi-table>
                 </template>
-              </yi-operation>
+              </yi-action>
             </el-col>
           </template>
 
@@ -207,18 +207,18 @@
             <el-tag v-else size="mini" type="info">{{ row.pagePath }}</el-tag>
           </template>
           <template #opt="{ row, refresh }">
-            <yi-operation
-              :api-config="apis.updateMenu"
+            <yi-action
+              :api="apis.updateMenu"
               type="text"
               text="修改"
               size="mini"
               icon="el-icon-edit"
-              :form-model="row"
+              :model="row"
               modal-title="修改菜单"
               dialog-width="700px"
               @on-submit-success="
-                (formModel) => {
-                  Object.assign(row, formModel);
+                (res, model) => {
+                  Object.assign(row, model);
                 }
               "
             >
@@ -229,11 +229,11 @@
                   use-for="edit"
                 />
               </template>
-            </yi-operation>
+            </yi-action>
 
-            <yi-operation
+            <yi-action
               title="删除"
-              :api-config="apis.removeMenu(row.id)"
+              :api="apis.removeMenu(row.id)"
               type="text"
               text="删除"
               size="mini"
@@ -245,16 +245,16 @@
                 }
               "
             />
-            <yi-operation
+            <yi-action
               v-if="row.type == 'Directory'"
               title="新增子项"
-              :api-config="apis.addMenu"
+              :api="apis.addMenu"
               type="text"
               text="新增子项"
               size="mini"
               icon="el-icon-circle-plus"
               :modal-title="row.name + ' - 新增子项'"
-              :form-model="{parentId: row.id}"
+              :model="{parentId: row.id}"
               dialog-width="70%"
               @on-submit-success="
                 () => {
@@ -269,7 +269,7 @@
                   use-for="add"
                 />
               </template>
-            </yi-operation>
+            </yi-action>
           </template>
         </yi-table>
       </el-col>
@@ -277,8 +277,8 @@
         <yi-table
           ref="apiTable"
           :init="false"
-          :api-config="apis.getMenuPageApis"
-          :right-tools="[]"
+          :api="apis.getMenuPageApis"
+          :tools="[]"
           :columns="[
             {
               label: '操作名称',
@@ -298,7 +298,7 @@
           ]"
           :res-adapter="apiResAdapter"
         >
-          <template #right-bar>
+          <template #tools>
             <el-tooltip
               class="item"
               effect="dark"

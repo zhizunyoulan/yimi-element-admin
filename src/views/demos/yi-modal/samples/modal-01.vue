@@ -1,7 +1,7 @@
 <template>
-  <yi-modal-trigger text="弹窗查看" type="warning">
+  <yi-modal text="弹窗查看" type="warning">
     <table01 />
-  </yi-modal-trigger>
+  </yi-modal>
 </template>
 <script>
 import table01 from '../../yi-table/samples/table-01.vue'

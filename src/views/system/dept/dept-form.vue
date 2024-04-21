@@ -1,5 +1,5 @@
 <template>
-  <el-row v-if="model">
+  <el-form :model="model" inline>
     <el-form-item
       label="部门名称"
       prop="name"
@@ -33,7 +33,7 @@
         placeholder="请输入部门代码"
       ></el-input>
     </el-form-item>
-  </el-row>
+  </el-form>
 </template>
 <script>
 export default {

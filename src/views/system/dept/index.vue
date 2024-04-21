@@ -1,7 +1,7 @@
 <template>
   <div class="app-container">
     <yi-table
-      :api-config="apis.getDepartmentTree"
+      :api="apis.getDepartmentTree"
       :right-tools="['refresh']"
       :columns="[
         {
@@ -22,31 +22,33 @@
       default-expand-all
     >
       <template #search-form="{ model, refresh }">
-        <el-form-item label="部门名称">
-          <el-input
-            v-model="model.name"
-            placeholder="请输入部门名称"
-          ></el-input>
-        </el-form-item>
-        <el-form-item label="部门代码">
-          <el-input
-            v-model="model.code"
-            placeholder="请输入部门代码"
-          ></el-input>
-        </el-form-item>
+        <el-form inline :model="model">
+          <el-form-item label="部门名称">
+            <el-input
+              v-model="model.name"
+              placeholder="请输入部门名称"
+            ></el-input>
+          </el-form-item>
+          <el-form-item label="部门代码">
+            <el-input
+              v-model="model.code"
+              placeholder="请输入部门代码"
+            ></el-input>
+          </el-form-item>
 
-        <el-form-item>
-          <el-button type="primary" size="mini" @click="refresh"
-            >查询</el-button
-          >
-        </el-form-item>
+          <el-form-item>
+            <el-button type="primary" size="mini" @click="refresh"
+              >查询</el-button
+            >
+          </el-form-item>
+        </el-form>
       </template>
 
       <template #tool-bar="{ refresh, el }">
         <el-col :span="1.5">
           <!-- 添加 -->
-          <yi-operation
-            :api-config="apis.addDepartment"
+          <yi-action
+            :api="apis.addDepartment"
             text="添加"
             type="primary"
             size="mini"
@@ -59,7 +61,7 @@
             <template #default="scope">
               <dept-form v-model="scope.model" use-for="add" />
             </template>
-          </yi-operation>
+          </yi-action>
         </el-col>
 
         <el-col :span="1.5">
@@ -75,25 +77,59 @@
       </template>
 
       <template #opt="{ row }">
-        <yi-operation
-          :api-config="apis.updateDepartment"
+        <yi-action
+          :api="apis.updateDepartment"
           type="text"
           text="修改"
           size="mini"
           icon="el-icon-edit"
-          :form-model="row"
+          :model="row"
           modal-title="修改部门"
           dialog-width="500px"
           @on-submit-success="
-            (formModel) => {
-              Object.assign(row, formModel);
+            (res, model) => {
+              Object.assign(row, model);
             }
           "
         >
           <template #default="scope">
             <dept-form v-model="scope.model" use-for="edit" />
+            <!-- <el-form :model="model" inline>
+              <el-form-item
+                label="部门名称"
+                prop="name"
+                label-width="110px"
+                :rules="{
+                  required: true,
+                  message: '请输入部门名称',
+                  trigger: 'blur',
+                }"
+              >
+                <el-input
+                  v-model="model.name"
+                  placeholder="请输入部门名称"
+                ></el-input>
+              </el-form-item>
+
+              <el-form-item
+                label="部门代码"
+                prop="code"
+                label-width="110px"
+                :rules="{
+                  required: true,
+                  message: '请输入部门代码',
+                  trigger: 'blur',
+                }"
+              >
+                <el-input
+                  v-model="model.code"
+                  disabled
+                  placeholder="请输入部门代码"
+                ></el-input>
+              </el-form-item>
+            </el-form> -->
           </template>
-        </yi-operation>
+        </yi-action>
       </template>
     </yi-table>
   </div>
@@ -115,7 +151,7 @@ export default {
   },
   pageInfo: {
     title: "部门管理",
-    permission: 'system:department:view'
+    permission: "system:department:view",
   },
   components: { DeptForm },
   data() {

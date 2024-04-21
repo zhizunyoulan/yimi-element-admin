@@ -1,6 +1,12 @@
 <template>
-  <el-row v-if="model">
-    <el-row>
+  <el-form
+    v-if="model"
+    :model="model"
+    inline
+    label-position="right"
+    label-width="75px"
+  >
+    <el-row type="flex">
       <el-col :span="12">
         <el-form-item
           v-if="model.id == undefined"
@@ -191,7 +197,7 @@
         placeholder="请输入电话"
       ></el-input>
     </el-form-item> -->
-  </el-row>
+  </el-form>
 </template>
 <script>
 import EntityForm from "@/mixins/EntityForm";

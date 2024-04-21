@@ -1,5 +1,11 @@
 <template>
-  <el-row v-if="model">
+  <el-form
+    v-if="model"
+    :model="model"
+    inline
+    label-position="right"
+    label-width="75px"
+  >
     <el-row>
       <el-col :span="12">
         <el-form-item label="上级菜单" prop="parentId">
@@ -31,7 +37,7 @@
         <el-form-item label="菜单类型" prop="type">
           <el-select
             v-model="model.type"
-            :disabled="(typeof model.id) != 'undefined'"
+            :disabled="typeof model.id != 'undefined'"
             placeholder="请选择菜单类型"
           >
             <el-option label="目录" value="Directory"> </el-option>
@@ -100,7 +106,7 @@
         </el-form-item>
       </el-col>
     </el-row>
-  </el-row>
+  </el-form>
 </template>
 <script>
 import EntityForm from "@/mixins/EntityForm";
