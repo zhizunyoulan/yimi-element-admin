@@ -109,7 +109,7 @@
             <el-col :span="1.5">
               <yi-action
                 :api="apis.initMenu"
-                text="菜单初始化"
+                text="同步菜单"
                 type="danger"
                 size="mini"
                 :plain="true"
