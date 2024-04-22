@@ -19,7 +19,7 @@ export const constantRoutes = [
                 path: 'dashboard',
                 component: Dashboard,
                 name: '首页',
-                meta: { title: '首页', icon: 'el-icon-s-home', affix: true }
+                meta: { title: '首页', icon: 'dashboard', affix: true }
             },
         ]
     }
@@ -37,7 +37,7 @@ export const dynamicRoutes = [
         path: '/system',
         component: VeaLayout,
         name: '系统管理',
-        meta: { title: '系统管理', icon: 'el-icon-setting' },
+        meta: { title: '系统管理', icon: 'system' },
         children: [
             {
                 path: 'user',
@@ -69,25 +69,25 @@ export const dynamicRoutes = [
         path: '/demos',
         component: VeaLayout,
         name: '组件演示',
-        meta: { title: '组件演示', icon: 'el-icon-guide' },
+        meta: { title: '组件演示', icon: 'example' },
         children: [
             {
                 path: 'table',
                 component: () => import('@/views/demos/yi-table'),
                 name: '表格',
-                meta: { title: '表格', affix: false }
+                meta: { title: '表格', affix: false, icon: 'table' }
             },
             {
                 path: 'action',
                 component: () => import('@/views/demos/yi-action'),
                 name: '操作',
-                meta: { title: '操作', affix: false }
+                meta: { title: '操作', affix: false, icon: 'el-icon-thumb' }
             },
             {
                 path: 'modal',
                 component: () => import('@/views/demos/yi-modal'),
                 name: '模态框',
-                meta: { title: '模态框', affix: false }
+                meta: { title: '模态框', affix: false , icon: 'el-icon-data-board'}
             }
         ]
     },

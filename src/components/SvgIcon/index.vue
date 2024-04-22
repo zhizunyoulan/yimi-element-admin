@@ -6,10 +6,11 @@
 </template>
 
 <script>
-import { isExternal } from '../../layouts/vue-element-admin/utils/validate'
+import { isExternal } from '@/utils/validate'
 
 export default {
-  name: 'SvgIconAbc',
+  name: 'SvgIcon',
+  automount: true,
   props: {
     iconClass: {
       type: String,
@@ -46,7 +47,8 @@ export default {
 
 <style scoped>
 .svg-icon {
-  width: 1em;
+  width: 24px;
+  /* width: 1em; */
   height: 1em;
   vertical-align: -0.15em;
   fill: currentColor;

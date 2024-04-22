@@ -1,6 +1,6 @@
 import './styles/element-variables.scss'
 import './styles/index.scss' // global css
-import './icons' // icon
+// import './icons' // icon
 import layoutStore from './store'
 import store from '../../store'
 import VeaLayout from "./index.vue";

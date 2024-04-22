@@ -16,6 +16,8 @@ Vue.use(ElementUi, {
   size: Cookies.get("size") || "medium", // set element-ui default size
 });
 
+import './assets/icons' // icon
+
 // 引入YimiElement
 import YimiElement from "@uublue/yimi-element";
 import "@uublue/yimi-element/lib/yimi-element.css";
