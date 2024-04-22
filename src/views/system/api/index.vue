@@ -7,17 +7,14 @@
         {
           label: '接口名称',
           prop: 'name',
-          $slot: 'name',
         },
         {
           label: '所需权限',
           prop: 'permissions',
-          $slot: 'permissions',
         },
         {
           label: '所需角色',
           prop: 'roles',
-          $slot: 'roles',
         },
         {
           label: '类名',
@@ -31,7 +28,6 @@
         {
           label: '所在页面',
           prop: 'pageApis',
-          $slot: 'pageApis',
         },
       ]"
     >
@@ -93,14 +89,13 @@
                   label: '接口',
                   headerAlign: 'center',
                   prop: 'apis',
-                  $slot: 'apis',
                 },
               ]"
               :tools="[]"
               default-expand-all
               :data="filterPages"
             >
-              <template #apis="{ row }">
+              <template #~apis="{ row }">
                 <ul v-if="Array.isArray(row.apis)">
                   <li v-for="(api, index) in row.apis" :key="index">
                     <api-display :api="api" />
@@ -111,7 +106,7 @@
           </template>
         </yi-action>
       </template>
-      <template #name="{ row, value }">
+      <template #~name="{ row, value }">
         <span v-if="value">{{ value }}</span>
         <api-display
           v-else
@@ -122,13 +117,13 @@
           }"
         />
       </template>
-      <template #permissions="{ row }">
+      <template #~permissions="{ row }">
         <security-display :codes="row.permissions" />
       </template>
-      <template #roles="{ row }">
+      <template #~roles="{ row }">
         <security-display :codes="row.roles" />
       </template>
-      <template #pageApis="{ row }">
+      <template #~pageApis="{ row }">
         <el-tag
           v-for="(pageApi, index) in row.pageApis"
           :key="index"

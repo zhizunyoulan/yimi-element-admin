@@ -37,7 +37,7 @@
         <el-form-item label="菜单类型" prop="type">
           <el-select
             v-model="model.type"
-            :disabled="typeof model.id != 'undefined'"
+            :disabled="(typeof model.id) != 'undefined'"
             placeholder="请选择菜单类型"
           >
             <el-option label="目录" value="Directory"> </el-option>

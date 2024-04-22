@@ -47,7 +47,7 @@
         </p>
 
         <p>更多组件将陆续加入！</p>
-        <p><b>当前版本:</b> <span>v0.2.3</span></p>
+        <p><b>当前版本:</b> <span>v0.2.6</span></p>
         <p>
           <el-tag type="danger">&yen;免费使用</el-tag>
         </p>

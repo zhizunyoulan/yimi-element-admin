@@ -10,7 +10,6 @@
             {
               label: '菜单名称',
               prop: 'name',
-              $slot: 'name',
             },
             {
               label: '请求地址',
@@ -46,13 +45,12 @@
             {
               label: '对应页面',
               headerAlign: 'center',
-              $slot: 'pagePath',
+              prop: 'pagePath'
             },
 
             {
               label: '操作',
               prop: 'opt',
-              $slot: 'opt',
             },
           ]"
           default-expand-all
@@ -179,7 +177,7 @@
           </template>
 
           <!-- 自定义列的插槽 -->
-          <template #name="{ row }">
+          <template #~name="{ row }">
             <template v-if="row.type == 'Directory'">
               <i v-if="row.icon" :class="row.icon" />
               <span>{{ row.name }}</span>
@@ -202,11 +200,11 @@
               </el-tooltip>
             </template>
           </template>
-          <template #pagePath="{ row }">
+          <template #~pagePath="{ row }">
             <span v-if="row.type == 'Directory'"> - </span>
             <el-tag v-else size="mini" type="info">{{ row.pagePath }}</el-tag>
           </template>
-          <template #opt="{ row, refresh }">
+          <template #~opt="{ row, refresh }">
             <yi-action
               :api="apis.updateMenu"
               type="text"
@@ -283,17 +281,14 @@
             {
               label: '操作名称',
               prop: 'name',
-              $slot: 'name',
             },
             {
               label: '权限标识',
               prop: 'permissions',
-              $slot: 'permissions',
             },
             {
               label: '所需角色',
               prop: 'roles',
-              $slot: 'roles',
             },
           ]"
           :res-adapter="apiResAdapter"
@@ -313,7 +308,8 @@
               />
             </el-tooltip>
           </template>
-          <template #name="{ row }">
+
+          <template #~name="{ row }">
             <el-popover placement="left" width="180" trigger="hover">
               <api-display
                 :api="{
@@ -339,10 +335,10 @@
               />
             </el-tooltip>
           </template>
-          <template #permissions="{ row }">
+          <template #~permissions="{ row }">
             <security-display :codes="row.permissions" />
           </template>
-          <template #roles="{ row }">
+          <template #~roles="{ row }">
             <security-display :codes="row.roles" />
           </template>
         </yi-table>

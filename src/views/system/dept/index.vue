@@ -16,12 +16,11 @@
           label: '操作',
           prop: 'opt',
           width: '360px',
-          $slot: 'opt',
         },
       ]"
       default-expand-all
     >
-      <template #search-form="{ model, refresh }">
+      <template #search-bar="{ model, refresh }">
         <el-form inline :model="model">
           <el-form-item label="部门名称">
             <el-input
@@ -76,7 +75,7 @@
         </el-col>
       </template>
 
-      <template #opt="{ row }">
+      <template #~opt="{ row }">
         <yi-action
           :api="apis.updateDepartment"
           type="text"
@@ -94,40 +93,6 @@
         >
           <template #default="scope">
             <dept-form v-model="scope.model" use-for="edit" />
-            <!-- <el-form :model="model" inline>
-              <el-form-item
-                label="部门名称"
-                prop="name"
-                label-width="110px"
-                :rules="{
-                  required: true,
-                  message: '请输入部门名称',
-                  trigger: 'blur',
-                }"
-              >
-                <el-input
-                  v-model="model.name"
-                  placeholder="请输入部门名称"
-                ></el-input>
-              </el-form-item>
-
-              <el-form-item
-                label="部门代码"
-                prop="code"
-                label-width="110px"
-                :rules="{
-                  required: true,
-                  message: '请输入部门代码',
-                  trigger: 'blur',
-                }"
-              >
-                <el-input
-                  v-model="model.code"
-                  disabled
-                  placeholder="请输入部门代码"
-                ></el-input>
-              </el-form-item>
-            </el-form> -->
           </template>
         </yi-action>
       </template>

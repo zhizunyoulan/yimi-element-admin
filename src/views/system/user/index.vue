@@ -123,7 +123,6 @@
             {
               label: '操作',
               prop: 'opt',
-              $slot: 'opt',
             },
           ]"
           :res-adapter="
@@ -196,13 +195,8 @@
             </el-col>
           </template>
 
-          <template #status="{ row }">
-            <el-tag v-if="row.status == 0" type="danger" class="el-icon-close"
-              >禁用</el-tag
-            >
-            <el-tag v-else type="success" class="el-icon-check">正常</el-tag>
-          </template>
-          <template #opt="{ row, refresh }">
+          
+          <template #~opt="{ row, refresh }">
             <!-- 编辑 -->
             <yi-action
               title="修改用户"

@@ -22,7 +22,7 @@ export const updateMenu = {
 // 删除菜单
 export function removeMenu(id) {
   return {
-    url: `/menu/${id}`,
+    url: `/menu-item/${id}`,
     method: "DELETE",
   };
 }
