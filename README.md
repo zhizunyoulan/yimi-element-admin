@@ -8,8 +8,11 @@
     另外，该项目的基础框架代码来自`VueElementAdmin`，在此表示感谢！
 </p>
 
-
 [文档地址](http://yimi.uublue.com)
+
+> 另外，配套的后端项目，[yimi-spring](https://gitee.com/uublue/yimi-spring)，正在开发中。
+
+
 
 ## Project setup
 
@@ -42,6 +45,10 @@ npm run lint
     UI的组件增强库，封装了多种通用、易用的增强组件。
 </p>
 
-### Customize configuration
+## 交流方式
 
-See [Configuration Reference](https://cli.vuejs.org/config/).
+> QQ群: `956379914`
+
+<img src="http://yimi-assets.uublue.com/yimi-element/qqqun_1.png" width="220" height="220" >
+
+> Email: `uublue@126.com`

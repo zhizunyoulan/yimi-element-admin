@@ -56,20 +56,17 @@
     <el-divider />
 
     <el-row :gutter="20">
-      <el-col :xs="12" :sm="12" :md="6" :lg="5">
+      <el-col :xs="10" :sm="10" :md="6" :lg="5">
         <el-card class="update-log">
           <div slot="header" class="clearfix">
-            <span>微信公众号</span>
+            <span>QQ交流群: </span><el-tag type="info" size="mini">956379914</el-tag>
           </div>
           <div class="body">
             <img
-              src="@/assets/yimi/qrcode_for_gh_8fce87671431_344.jpg"
+              src="http://yimi-assets.uublue.com/yimi-element/qqqun_1.png"
               alt="donate"
               width="100%"
             />
-            <span style="display: inline-block; height: 30px; line-height: 30px"
-              >如有疑问，可以关注公众号留言</span
-            >
           </div>
         </el-card>
       </el-col>
