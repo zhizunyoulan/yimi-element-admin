@@ -63,8 +63,7 @@
           </div>
           <div class="body">
             <img
-              src="http://yimi-assets.uublue.com/yimi-element/qqqun_1.png"
-              alt="donate"
+              src="https://yimi-assets-public.oss-cn-beijing.aliyuncs.com/yimi-element/qqqun_1.png"
               width="100%"
             />
           </div>
