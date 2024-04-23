@@ -48,7 +48,7 @@
 - tools(工具）插槽，用于放置简易的工具
 - append 插槽，保留el-table的append插槽
 - pagination(分页）插槽，可以替换默认的分页
-- 可通过`provide/inject`注入（一般在App.vue全局注入），替换内置的默认逻辑：默认axios对象，默认tools，model-merger、page-merger、sort-merger、res-adapter
+- 可通过`provide/inject`注入（一般在App.vue全局注入），替换内置的默认逻辑：默认axios对象，默认`tools`，`model-merger`、`page-merger`、`sort-merger`、`res-adapter`、`on-query-fail`
 - 接口查询到的数据可以格式化后再渲染：res-adapter函数
 - 合理的缺省设计
 
@@ -165,7 +165,7 @@
 - 多点控制最终发送的请求数据：api函数 （用于构造基础api配置项）、model-merger（从内置model数据合并）、page-merger(从分页参数合并)、sort-merger（从排序参数合并），onSubmit函数 （可以替换内置的提交处理）
 - 内置model数据的存续可以配置：always、submit、never
 - 发送请求前，会对默认插槽中找到的第一个form表单进行验证（无表单则不验证），验证不通过，会抛出事件
-- 可通过`provide/inject`注入（一般在App.vue全局注入），替换内置的默认逻辑：默认axios对象，默认model-merger（从内置model构造请求数据）
+- 可通过`provide/inject`注入（一般在App.vue全局注入），替换内置的默认逻辑：默认axios对象、默认`model-merger`（从内置model构造请求数据）、`on-submit-fail`
 - 合理的缺省设计
 
 

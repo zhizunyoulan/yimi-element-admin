@@ -56,7 +56,7 @@
           default-expand-all
           highlight-current-row
           :paged="false"
-          @query-success="
+          @on-query-success="
             (res) => {
               setMenuOptions(res);
             }

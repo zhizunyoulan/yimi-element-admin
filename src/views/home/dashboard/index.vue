@@ -18,7 +18,7 @@
           另外，该项目的基础框架代码来自<el-tag type="info" size="mini">VueElementAdmin</el-tag>，在此表示感谢！
         </p>
         <p>更多内容将陆续加入！</p>
-        <p><b>当前版本:</b> <span>v0.1.0</span></p>
+        <p><b>当前版本:</b> <span>v0.1.1</span></p>
         <p>
           <el-tag type="danger">&yen;免费开源</el-tag>
         </p>
@@ -47,7 +47,7 @@
         </p>
 
         <p>更多组件将陆续加入！</p>
-        <p><b>当前版本:</b> <span>v0.2.6</span></p>
+        <p><b>当前版本:</b> <span>v0.2.7</span></p>
         <p>
           <el-tag type="danger">&yen;免费使用</el-tag>
         </p>
