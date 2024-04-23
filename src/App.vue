@@ -4,13 +4,32 @@
   </div>
 </template>
 <script>
-// import { Message } from "element-ui";
-import httpClient from '@/utils/request'
+import httpClient from "@/utils/request";
+import { Message } from "element-ui";
 export default {
   name: "App",
   provide: {
-    'yimi-table-axios': httpClient,
-    'yimi-action-axios': httpClient,
+    // 全局为yi-table注入axios对象
+    "yimi-table-axios": httpClient,
+    // 全局为yi-action注入axios对象
+    "yimi-action-axios": httpClient,
+    // 全局为yi-action注入提交失败后的处理
+    "yimi-action-on-submit-fail": (error) => {
+      console.error(error);
+      if (error?.response?.data?.message) {
+        Message({
+          type: "error",
+          message: error.response.data.message,
+          duration: 1000,
+        });
+      } else {
+        Message({
+          type: "error",
+          message: "操作失败",
+          duration: 1000,
+        });
+      }
+    },
     // "yimi-on-action-submit": () => {
     //   Message({
     //     type: "error",
@@ -50,7 +69,9 @@ export default {
 </script>
 <style>
 /* element ui的tree组件，highlight-current = true时，非当前节点取消focus的背景颜色 */
-  .el-tree.el-tree--highlight-current .el-tree-node:not(.is-current):focus > .el-tree-node__content {
-    background-color: inherit !important;
-  }
+.el-tree.el-tree--highlight-current
+  .el-tree-node:not(.is-current):focus
+  > .el-tree-node__content {
+  background-color: inherit !important;
+}
 </style>
