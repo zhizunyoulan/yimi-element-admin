@@ -15,7 +15,7 @@ export default {
     "yimi-action-axios": httpClient,
     // 全局为yi-action注入提交失败后的处理
     "yimi-action-on-submit-fail": (error) => {
-      console.error(error);
+      // console.error(error);
       if (error?.response?.data?.message) {
         Message({
           type: "error",

@@ -85,7 +85,6 @@ service.interceptors.response.use(res => {
   }
 },
   error => {
-    // console.log('err:', error)
     let { message, response } = error;
     if (response.status == 401) {
       if (!isRelogin.show) {
@@ -111,8 +110,8 @@ service.interceptors.response.use(res => {
       }
       message = response?.data?.message || message
       Message({ message: message, type: 'error', duration: 5 * 1000 })
-      return Promise.reject(error)
     }
+    return Promise.reject(error.response.data)
   })
 
 

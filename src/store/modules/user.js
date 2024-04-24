@@ -93,7 +93,7 @@ const actions = {
         commit("SET_ACCESSED_ROUTES", module.accessedRoutes);
       });
     }).catch(error => {
-      console.error('authenticate error:' ,error)
+      console.log('authenticate fail:' ,error)
     })
     dispatch("loadMenu");
   },
@@ -110,6 +110,8 @@ const actions = {
         })
         commit("SET_MENU", menu);
         resolve(menu);
+      }).catch(error => {
+        console.log('get menu fail:' ,error)
       });
     });
   },
