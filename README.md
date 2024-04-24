@@ -53,7 +53,7 @@
 #### 特性
 
 - 完全保留ElTable的功能
-- 能从接口获取数据并渲染，也能直接通过prop传data，格式为数组或`{rows: [], total, summary}`
+- 能从接口获取数据并渲染，也能直接通过prop传data，格式为数组或`{rows: any[], total: number, summary: any}`
 - 多种列渲染方式（formatter、render、插槽），插槽能控制列的标题或数据单元格
 - 自动分页，支持前端分页和后端分页；自动计算合计行
 - default(默认）插槽，保留el-table默认插槽的功能，可以插入el-table-column
