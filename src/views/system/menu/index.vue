@@ -45,7 +45,7 @@
             {
               label: '对应页面',
               headerAlign: 'center',
-              prop: 'pagePath'
+              prop: 'pagePath',
             },
 
             {
@@ -73,8 +73,8 @@
           "
         >
           <template #action-bar="{ refresh, el }">
-            <el-col :span="1.5">
-              <!-- 添加 -->
+            <el-row>
+              <!-- 新增 -->
               <yi-action
                 :api="apis.addMenu"
                 text="新增"
@@ -94,9 +94,8 @@
                   />
                 </template>
               </yi-action>
-            </el-col>
 
-            <el-col :span="1.5">
+              <!-- 展开/折叠 -->
               <el-button
                 type="info"
                 plain
@@ -105,8 +104,8 @@
                 @click="el.toggleAllExpansion()"
                 >展开/折叠</el-button
               >
-            </el-col>
-            <el-col :span="1.5">
+
+              <!-- 同步菜单 -->
               <yi-action
                 :api="apis.initMenu"
                 text="同步菜单"
@@ -173,7 +172,7 @@
                   </yi-table>
                 </template>
               </yi-action>
-            </el-col>
+            </el-row>
           </template>
 
           <!-- 自定义列的插槽 -->
@@ -252,7 +251,7 @@
               size="mini"
               icon="el-icon-circle-plus"
               :modal-title="row.name + ' - 新增子项'"
-              :model="{parentId: row.id}"
+              :model="{ parentId: row.id }"
               dialog-width="70%"
               @on-submit-success="
                 () => {

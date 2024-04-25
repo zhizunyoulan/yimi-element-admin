@@ -138,12 +138,13 @@
                         )
                           .then(() => {
                             // 请求接口
-                            actionAxios.request(
-                              apis.updateUserStatus({
-                                id: row.id,
-                                status: newValue,
-                              })
-                            )
+                            actionAxios
+                              .request(
+                                apis.updateUserStatus({
+                                  id: row.id,
+                                  status: newValue,
+                                })
+                              )
                               .then(() => {
                                 $refs.userTable.refresh();
                                 $message({
@@ -152,11 +153,11 @@
                                 });
                               })
                               .catch(() => {
-                                row.status = (1 - newValue);
+                                row.status = 1 - newValue;
                               });
                           })
                           .catch(() => {
-                            row.status = (1 - newValue);
+                            row.status = 1 - newValue;
                           });
                       },
                     },
@@ -218,7 +219,7 @@
             </el-form>
           </template>
           <template #action-bar="{ refresh }">
-            <el-col :span="1.5">
+            <el-row>
               <yi-action
                 :api="apis.addUser"
                 plain
@@ -242,7 +243,7 @@
                   />
                 </template>
               </yi-action>
-            </el-col>
+            </el-row>
           </template>
 
           <template #~opt="{ row, refresh }">
@@ -257,6 +258,15 @@
               :model="row"
               modal-title="修改用户"
               dialog-width="750px"
+              :model-merger="({ data}, model) => {
+                data.id = model.id
+                data.username = model.username
+                data.realName = model.realName
+                data.deptId = model.deptId
+                data.contactNumber = model.contactNumber
+                data.email = model.email
+                data.remark = model.remark
+              }"
               @on-submit-success="
                 (res, formModel) => {
                   Object.assign(row, formModel);
