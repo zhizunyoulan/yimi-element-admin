@@ -86,7 +86,7 @@ service.interceptors.response.use(res => {
 },
   error => {
     let { message, response } = error;
-    if (response.status == 401) {
+    if (response?.status == 401) {
       if (!isRelogin.show) {
         isRelogin.show = true;
         MessageBox.confirm('登录状态已过期，您可以继续留在该页面，或者重新登录', '系统提示', { confirmButtonText: '重新登录', cancelButtonText: '取消', type: 'warning' }).then(() => {
@@ -98,7 +98,7 @@ service.interceptors.response.use(res => {
           isRelogin.show = false;
         });
         return Promise.reject('无效的会话，或者会话已过期，请重新登录。')
-      } else if (response.status == 403) {
+      } else if (response?.status == 403) {
         message = response?.data?.message || "无权限"
       }
       if (message == "Network Error") {
@@ -111,7 +111,7 @@ service.interceptors.response.use(res => {
       message = response?.data?.message || message
       Message({ message: message, type: 'error', duration: 5 * 1000 })
     }
-    return Promise.reject(error.response.data)
+    return Promise.reject(error.response?.data)
   })
 
 

@@ -102,7 +102,7 @@
               align: 'center',
               render: (h, { row, value }) => {
                 //在此演示 render 在formatter之后执行， 拿到的value是formatter处理后的
-                if (row.userType === 0) {
+                if (row.userType === 1) {
                   return h(
                     'el-tag',
                     {

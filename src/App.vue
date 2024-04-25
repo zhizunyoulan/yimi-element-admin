@@ -15,11 +15,10 @@ export default {
     "yimi-action-axios": httpClient,
     // 全局为yi-action注入提交失败后的处理
     "yimi-action-on-submit-fail": (error) => {
-      // console.error(error);
-      if (error?.response?.data?.message) {
+      if (error?.message) {
         Message({
           type: "error",
-          message: error.response.data.message,
+          message: error.message,
           duration: 1000,
         });
       } else {
