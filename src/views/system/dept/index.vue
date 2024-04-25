@@ -21,7 +21,7 @@
       default-expand-all
     >
       <template #search-bar="{ model, refresh }">
-        <el-form inline :model="model">
+        <el-form inline :model="model" size="mini">
           <el-form-item label="部门名称">
             <el-input
               v-model="model.name"
@@ -43,8 +43,8 @@
         </el-form>
       </template>
 
-      <template #tool-bar="{ refresh, el }">
-        <el-col :span="1.5">
+      <template #action-bar="{ refresh, el }">
+        <el-row>
           <!-- 添加 -->
           <yi-action
             :api="apis.addDepartment"
@@ -61,9 +61,7 @@
               <dept-form v-model="scope.model" use-for="add" />
             </template>
           </yi-action>
-        </el-col>
 
-        <el-col :span="1.5">
           <el-button
             type="info"
             plain
@@ -72,10 +70,10 @@
             @click="el.toggleAllExpansion()"
             >展开/折叠</el-button
           >
-        </el-col>
+        </el-row>
       </template>
 
-      <template #~opt="{ row }">
+      <template #~opt="{ row, refresh }">
         <yi-action
           :api="apis.updateDepartment"
           type="text"
@@ -95,6 +93,22 @@
             <dept-form v-model="scope.model" use-for="edit" />
           </template>
         </yi-action>
+
+        <yi-action
+              title="删除部门"
+              :api="apis.removeDepartment(row.id)"
+              type="text"
+              text="删除"
+              size="mini"
+              icon="el-icon-delete"
+              modal-title="删除部门"
+              confirm-text="是否删除该部门？"
+              @on-submit-success="
+                () => {
+                  refresh();
+                }
+              "
+            />
       </template>
     </yi-table>
   </div>
@@ -106,6 +120,7 @@ import {
   getDepartmentTree,
   addDepartment,
   updateDepartment,
+  removeDepartment
 } from "@/apis/system/dept";
 export default {
   name: "DeptPage",
@@ -113,6 +128,7 @@ export default {
     getDepartmentTree,
     addDepartment,
     updateDepartment,
+    removeDepartment
   },
   pageInfo: {
     title: "部门管理",

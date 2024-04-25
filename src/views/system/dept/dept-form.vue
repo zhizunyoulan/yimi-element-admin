@@ -1,5 +1,5 @@
 <template>
-  <el-form :model="model" inline>
+  <el-form :model="model">
     <el-form-item
       label="部门名称"
       prop="name"

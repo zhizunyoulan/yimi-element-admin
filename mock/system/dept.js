@@ -86,5 +86,15 @@ module.exports = [
         }
       }
     }
-  }
+  },
+  {
+    url: "/department/*",
+    type: "delete",
+    response: () => {
+      throw {
+        status: 500,
+        message: '不允许删除'
+      }
+    },
+  },
 ]

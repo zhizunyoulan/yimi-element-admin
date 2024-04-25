@@ -16,6 +16,14 @@ export const updateDepartment = {
   method: "put",
 };
 
+// 删除部门
+export function removeDepartment(id) {
+  return {
+      url: `/department/${id}`,
+      method: 'DELETE',
+  }
+}
+
 
 // export function getDeptOptionTree(query) {
 //   return new Promise((resolve, reject) => {
