@@ -37,9 +37,9 @@
                     </el-form-item>
                 </el-col>
                 <el-col :span="12">
-                    <el-form-item label="用户昵称" prop="nickName" required>
+                    <el-form-item label="用户昵称" prop="realName" required>
                         <el-input
-                            v-model="model.nickName"
+                            v-model="model.realName"
                             placeholder="请输入用户昵称"
                         />
                     </el-form-item>

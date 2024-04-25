@@ -1,6 +1,6 @@
-const {depTree, lastDeptId} = require('../db')
+const {depTree, latestIds} = require('../db')
 
-let lastId = lastDeptId
+// let lastId = lastDeptId
 const { findTargetRecursively } = require('../utils')
 module.exports = [
   {
@@ -29,7 +29,7 @@ module.exports = [
             parentDep.children = []
           }
           parentDep.push({
-            id: lastId++,
+            id: latestIds.deptId ++,
             name,
             code
           })
@@ -45,7 +45,7 @@ module.exports = [
         }
       } else {
         depTree.push({
-          id: lastId++,
+          id: latestIds.deptId ++,
           name,
           code
         })

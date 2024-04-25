@@ -6,10 +6,12 @@ let userTable = {
         {
             id: '@increment(2)',
             username: '@first',
-            nickName: '@cname',
+            realName: '@cname',
             'deptId|1-12': 1,
-            phone: '@phone',
-            'status|9-1': true,
+            contactNumber: '@phone',
+            email: '@email',
+            'status': 1,
+            'userType': 1,
             'createTime': '@datetime',
             timestamp: +Mock.Random.date('T'),
         }
@@ -20,13 +22,20 @@ users.unshift(
     Mock.mock({
         id: 1,
         username: 'admin',
-        nickName: '管理员',
-        phone: '@phone',
-        status: true,
+        realName: '管理员',
+        contactNumber: '@phone',
+        email: '@email',
+        status: 1,
+        userType: 0,
         'createTime': '@datetime',
         timestamp: +Mock.Random.date('T'),
     })
 )
+
+let latestIds = {
+    userId: 1000,
+    deptId: 13
+}
 
 // 部门树
 let depTree = [
@@ -95,13 +104,14 @@ let depTree = [
         code: '00800'
     },
 ]
-let lastDeptId = 13
+// let lastDeptId = 13
 
 
 
 
 module.exports = {
     users,
+    latestIds,
     depTree,
-    lastDeptId
+    // lastDeptId
 }

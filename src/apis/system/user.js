@@ -15,6 +15,14 @@ export const updateUser = {
     method: 'PUT',
 }
 
+// 修改用户状态
+export function updateUserStatus(user) {
+    return {
+        url: `/user/status`,
+        method: 'PUT',
+        data: user
+    }
+}
 
 // 删除用户
 export function removeUser(id) {

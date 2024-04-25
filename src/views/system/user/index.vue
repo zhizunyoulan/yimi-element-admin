@@ -100,20 +100,68 @@
               label: '账号状态',
               prop: 'status',
               align: 'center',
-              formatter: (row, column, cellValue) => {
-                return cellValue == 0 ? '无效' : '有效';
-              },
-              render: (h, { value }) => {
+              render: (h, { row, value }) => {
                 //在此演示 render 在formatter之后执行， 拿到的value是formatter处理后的
-                return h(
-                  'el-tag',
-                  {
-                    props: {
-                      type: value == '无效' ? 'warning' : 'success',
+                if (row.userType === 0) {
+                  return h(
+                    'el-tag',
+                    {
+                      props: {
+                        type: value === 0 ? 'info' : 'success',
+                      },
                     },
-                  },
-                  value
-                );
+                    value === 0 ? '禁用' : '正常'
+                  );
+                } else {
+                  return h('el-switch', {
+                    props: {
+                      value: row.status,
+                      activeValue: 1,
+                      activeColor: '#67C23A',
+                      inactiveValue: 0,
+                      inactiveColor: '#909399',
+                    },
+                    on: {
+                      input: (newValue) => {
+                        row.status = newValue;
+                      },
+                      change: (newValue) => {
+                        //修改用户的可用状态
+                        $confirm(
+                          newValue === 0 ? '禁用用户？' : '启用用户？',
+                          '提示',
+                          {
+                            confirmButtonText: '确定',
+                            cancelButtonText: '取消',
+                            type: 'warning',
+                          }
+                        )
+                          .then(() => {
+                            // 请求接口
+                            actionAxios.request(
+                              apis.updateUserStatus({
+                                id: row.id,
+                                status: newValue,
+                              })
+                            )
+                              .then(() => {
+                                $refs.userTable.refresh();
+                                $message({
+                                  type: 'success',
+                                  message: `修改成功`,
+                                });
+                              })
+                              .catch(() => {
+                                row.status = (1 - newValue);
+                              });
+                          })
+                          .catch(() => {
+                            row.status = (1 - newValue);
+                          });
+                      },
+                    },
+                  });
+                }
               },
             },
             {
@@ -132,7 +180,7 @@
           "
         >
           <template #search-bar="{ model, refresh }">
-            <el-form :model="model" inline>
+            <el-form :model="model" size="mini" inline>
               <el-form-item label="用户名称">
                 <el-input
                   v-model="model.realName"
@@ -178,7 +226,8 @@
                 type="primary"
                 icon="el-icon-plus"
                 modal-title="添加"
-                dialog-width="650px"
+                model-reserve="never"
+                dialog-width="750px"
                 @on-submit-success="
                   () => {
                     refresh();
@@ -188,6 +237,7 @@
                 <template #default="scope">
                   <user-form
                     v-model="scope.model"
+                    use-for="add"
                     :dept-options="deptOptions"
                   />
                 </template>
@@ -195,7 +245,6 @@
             </el-col>
           </template>
 
-          
           <template #~opt="{ row, refresh }">
             <!-- 编辑 -->
             <yi-action
@@ -207,7 +256,7 @@
               icon="el-icon-edit"
               :model="row"
               modal-title="修改用户"
-              dialog-width="650px"
+              dialog-width="750px"
               @on-submit-success="
                 (res, formModel) => {
                   Object.assign(row, formModel);
@@ -248,7 +297,13 @@
 <script>
 import request from "@/utils/request";
 import { getDepartmentTree } from "@/apis/system/dept";
-import { queryUser, addUser, updateUser, removeUser } from "@/apis/system/user";
+import {
+  queryUser,
+  addUser,
+  updateUser,
+  updateUserStatus,
+  removeUser,
+} from "@/apis/system/user";
 import UserForm from "./user-form.vue";
 import {
   OptionsMaker,
@@ -262,6 +317,7 @@ export default {
     queryUser,
     addUser,
     updateUser,
+    updateUserStatus,
     removeUser,
   },
   pageInfo: {
@@ -269,6 +325,14 @@ export default {
     permission: "system:user:view",
   },
   components: { UserForm },
+  inject: {
+    actionAxios: {
+      from: "yimi-action-axios",
+      default() {
+        return request;
+      },
+    },
+  },
   data() {
     return {
       // 部门树选项

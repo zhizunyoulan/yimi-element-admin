@@ -2,51 +2,42 @@
   <el-form
     v-if="model"
     :model="model"
-    inline
     label-position="right"
-    label-width="75px"
+    label-width="100px"
   >
-    <el-row type="flex">
+    <el-row>
       <el-col :span="12">
-        <el-form-item
-          v-if="model.id == undefined"
-          label="登录名"
-          prop="username"
-        >
+        <el-form-item label="登录名" prop="username" required>
           <el-input
             v-model="model.username"
             placeholder="请输入登录名"
-            maxlength="30"
+            :disabled="useFor == 'edit'"
           />
         </el-form-item>
       </el-col>
       <el-col :span="12">
-        <el-form-item
-          v-if="model.id == undefined"
-          label="用户密码"
-          prop="password"
-        >
+        <el-form-item label="真实姓名" prop="realName" required>
           <el-input
-            v-model="model.password"
-            placeholder="请输入用户密码"
-            type="password"
-            maxlength="20"
-            show-password
+            v-model="model.realName"
+            placeholder="请输入真实姓名"
           />
         </el-form-item>
       </el-col>
     </el-row>
-    <el-row>
+    <el-row v-if="model.id == undefined">
       <el-col :span="12">
-        <el-form-item label="真实姓名" prop="realName">
-          <el-input
-            v-model="model.realName"
-            placeholder="请输入真实姓名"
-            maxlength="30"
-          />
+        <el-form-item label="用户密码" prop="password" required>
+          <el-input v-model="model.password" type="password" show-password />
         </el-form-item>
       </el-col>
       <el-col :span="12">
+        <el-form-item label="请重复密码" prop="passwordRpt" required>
+          <el-input v-model="model.passwordRpt" type="password" show-password />
+        </el-form-item>
+      </el-col>
+    </el-row>
+    <el-row>
+      <el-col :span="24">
         <el-form-item label="归属部门" prop="deptId">
           <el-cascader
             v-model="model.deptId"
@@ -56,9 +47,10 @@
               value: 'id',
               label: 'name',
               checkStrictly: true,
+              emitPath: false
             }"
-            :show-all-levels="false"
-            filterable
+            clearable
+            style="width: 100%"
           ></el-cascader>
         </el-form-item>
       </el-col>
@@ -69,8 +61,8 @@
           label="联系方式"
           prop="contactNumber"
           :rules="{
-            pattern: /^((0\d{2,3}-\d{7,8})|(1[3584]\d{9}))$/,
-            message: '请输入合法手机号/电话号',
+            pattern: /^(13[0-9]|14[01456879]|15[0-35-9]|16[2567]|17[0-8]|18[0-9]|19[0-35-9])\d{8}$/,
+            message: '请输入合法手机号',
             trigger: 'blur',
           }"
         >
@@ -83,7 +75,11 @@
         </el-form-item>
       </el-col>
       <el-col :span="12">
-        <el-form-item label="邮箱" prop="email">
+        <el-form-item label="邮箱" prop="email" :rules="{
+            pattern: /^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/,
+            message: '请输入合法邮箱',
+            trigger: 'blur',
+          }">
           <el-input
             v-model="model.email"
             placeholder="请输入邮箱"
