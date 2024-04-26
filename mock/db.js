@@ -11,7 +11,7 @@ let userTable = {
             contactNumber: '@phone',
             email: '@email',
             'status': 1,
-            'userType': 1,
+            'userType': 0,
             'createTime': '@datetime',
             timestamp: +Mock.Random.date('T'),
         }
@@ -26,7 +26,7 @@ users.unshift(
         contactNumber: '@phone',
         email: '@email',
         status: 1,
-        userType: 0,
+        userType: 1,
         'createTime': '@datetime',
         timestamp: +Mock.Random.date('T'),
     })
