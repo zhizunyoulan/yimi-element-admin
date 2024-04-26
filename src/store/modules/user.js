@@ -74,12 +74,12 @@ const actions = {
           removeToken();
           resolve();
         })
-        .catch((error) => {
-          console.error(error);
+        .catch(() => {
+          commit("SET_TOKEN", "");
+          commit("SET_ROLES", []);
+          commit("SET_PERMISSIONS", []);
           removeToken();
           resolve();
-
-          // reject(error);
         });
     });
   },
@@ -93,7 +93,7 @@ const actions = {
         commit("SET_ACCESSED_ROUTES", module.accessedRoutes);
       });
     }).catch(error => {
-      console.log('authenticate fail:' ,error)
+      console.error('鉴权失败:' ,error.message || error.msg || error)
     })
     dispatch("loadMenu");
   },
@@ -111,7 +111,7 @@ const actions = {
         commit("SET_MENU", menu);
         resolve(menu);
       }).catch(error => {
-        console.log('get menu fail:' ,error)
+        console.error('获取菜单失败:' ,error.message || error.msg || error)
       });
     });
   },
