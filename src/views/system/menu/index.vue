@@ -263,7 +263,7 @@
                 <menu-form
                   v-model="scope.model"
                   :menu-options="menuOptions"
-                  use-for="add"
+                  use-for="addSub"
                 />
               </template>
             </yi-action>

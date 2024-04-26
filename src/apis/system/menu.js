@@ -15,7 +15,7 @@ export const addMenu = {
 };
 
 export const updateMenu = {
-  url: "/menu",
+  url: "/menu-item",
   method: "put",
 };
 

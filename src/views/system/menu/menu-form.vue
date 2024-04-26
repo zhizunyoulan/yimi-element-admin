@@ -2,7 +2,6 @@
   <el-form
     v-if="model"
     :model="model"
-    inline
     label-position="right"
     label-width="75px"
   >
@@ -17,8 +16,10 @@
               emitPath: false,
               checkStrictly: true,
             }"
+            :disabled="useFor == 'addSub'"
             clearable
             filterable
+            style="width: 100%"
           ></el-cascader>
         </el-form-item>
       </el-col>
@@ -37,8 +38,9 @@
         <el-form-item label="菜单类型" prop="type">
           <el-select
             v-model="model.type"
-            :disabled="(typeof model.id) != 'undefined'"
+            :disabled="typeof model.id != 'undefined'"
             placeholder="请选择菜单类型"
+            style="width: 100%"
           >
             <el-option label="目录" value="Directory"> </el-option>
             <el-option label="页面" value="Page"> </el-option>
@@ -56,19 +58,41 @@
         </el-form-item>
       </el-col>
     </el-row>
-    <el-row v-if="model.type != 'Directory'">
-      <el-col :span="12">
-        <el-form-item v-if="model.type == 'Page'" label="组件路径" prop="url">
+    <el-row>
+      <el-col v-if="model.type != 'Directory'" :span="12">
+        <el-form-item
+          v-if="model.type == 'Page'"
+          label="页面路径"
+          prop="pagePath"
+        >
           <el-cascader
-            v-model="model.url"
-            placeholder="请输入组件路径"
+            v-model="model.pagePath"
+            placeholder="请输入页面路径"
             :options="pageOptions"
             :props="{
               emitPath: false,
             }"
             :show-all-levels="false"
             filterable
-          />
+            style="width: 100%"
+            @change="onPagePathChange"
+          >
+            <template #default="{ data }">
+              <el-row type="flex" justify="space-between">
+                <el-col style="text-align: left">
+                  <span>{{ data.value }} </span>
+                </el-col>
+                <el-col style="text-align: right">
+                  <el-tag
+                    v-if="data.pageTitle"
+                    type="info"
+                    size="mini"
+                    >{{ data.pageTitle }}</el-tag
+                  >
+                </el-col>
+              </el-row>
+            </template>
+          </el-cascader>
         </el-form-item>
         <el-form-item
           v-else-if="model.type == 'ExternalLink'"
@@ -78,7 +102,7 @@
           <el-input v-model="model.url" placeholder="请输入网址" />
         </el-form-item>
       </el-col>
-      <el-col :span="12">
+      <el-col v-if="model.type != 'Directory'" :span="12">
         <el-form-item
           v-if="model.type != 'Directory'"
           label="权限标识"
@@ -92,10 +116,7 @@
           />
         </el-form-item>
       </el-col>
-    </el-row>
-
-    <el-row>
-      <el-col :span="24">
+      <el-col :span="12">
         <el-form-item label="排序号">
           <el-input
             v-model="model.sequence"
@@ -115,7 +136,7 @@ import {
   mapRecursively,
   OptionsMaker,
 } from "@/utils/recursive";
-import { pathTree } from "@/utils/page";
+import { pathTree, pages } from "@/utils/page";
 export default {
   mixins: [EntityForm],
   props: {
@@ -126,6 +147,15 @@ export default {
   },
   data() {
     let pageOptions = new OptionsMaker("path", "path").make(pathTree, [""]);
+    pageOptions = mapRecursively.apply(pageOptions, [
+      (option) => {
+        let page = pages.find((page) => page.path == option.value);
+        if (page) {
+          option.pageTitle = page.title;
+        }
+        return option;
+      },
+    ]);
     return {
       pageOptions,
     };
@@ -151,5 +181,11 @@ export default {
     },
   },
   created() {},
+  methods: {
+    onPagePathChange(pagePath) {
+      let page = pages.find((page) => page.path == pagePath);
+      this.model.permission = page?.permission;
+    },
+  },
 };
 </script>

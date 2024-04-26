@@ -76,6 +76,9 @@
 <script>
 export default {
   name: "Dashboard",
+  pageInfo: {
+    title: "首页",
+  },
   methods: {
     openPage(href) {
       window.open(href, "_blank");
