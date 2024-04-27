@@ -64,10 +64,10 @@ export default {
     },
   },
   created(){
-    this.authenticate()
+    this.loadMenu()
   },
   methods: {
-    ...mapActions("user", ["authenticate"]),
+    ...mapActions("user", ["loadMenu"]),
     handleClickOutside() {
       this.$store.dispatch("app/closeSideBar", { withoutAnimation: false });
     },

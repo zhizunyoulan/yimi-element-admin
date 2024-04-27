@@ -7,13 +7,17 @@ export default {
       type: String,
       default: "",
     },
-    title: {
+    // title: {
+    //   type: String,
+    //   default: "",
+    // },
+    name: {
       type: String,
       default: "",
     },
   },
   render(h, context) {
-    const { icon, title } = context.props;
+    const { icon, name } = context.props;
     const vnodes = [];
 
     if (icon) {
@@ -39,14 +43,14 @@ export default {
       }
     }
 
-    if (title) {
+    if (name) {
       vnodes.push(
         h(
           "span",
           {
             slot: "title",
           },
-          title
+          name
         )
       );
       // vnodes.push(<span slot='title'>{(title)}</span>)

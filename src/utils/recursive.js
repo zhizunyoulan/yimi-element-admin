@@ -45,6 +45,25 @@ export function findTargetRecursively(item, childrenProp, propKey, propVal) {
   }
 }
 
+
+export function findRecursively(fun, thisValue, childrenProp = "children") {
+  for (var index = 0; index < this.length; index++) {
+    let currentValue = this[index];
+    let found = fun.apply(thisValue, [currentValue, index, this]);
+    if (found) {
+      return currentValue;
+    } else {
+      let children = currentValue[childrenProp];
+      if (Array.isArray(children)) {
+        let target = findRecursively.apply(children, [fun, thisValue, childrenProp]);
+        if (target) {
+          return target
+        }
+      }
+    }
+  }
+}
+
 export function mapRecursively(fun, thisValue, childrenProps = "children") {
   if (typeof childrenProps == "string") {
     childrenProps = childrenProps.split(":", 2);

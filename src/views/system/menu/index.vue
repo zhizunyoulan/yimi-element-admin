@@ -235,9 +235,13 @@
               text="删除"
               size="mini"
               icon="el-icon-delete"
-              confirm-text="是否删除该菜单项？"
+              confirm-text="是否删除该菜单项及其子项？"
               @on-submit-success="
-                () => {
+                (res) => {
+                  $message({
+                    message: '删除了' + res.data + '个菜单',
+                    type: res.data > 0 ? 'success' : 'error'
+                  })
                   refresh();
                 }
               "
@@ -252,7 +256,7 @@
               icon="el-icon-circle-plus"
               :modal-title="row.name + ' - 新增子项'"
               :model="{ parentId: row.id }"
-              dialog-width="70%"
+              dialog-width="700px"
               @on-submit-success="
                 () => {
                   refresh();
@@ -391,7 +395,7 @@ export default {
     ...mapActions("page", ["initMenu"]),
     setMenuOptions(res) {
       let menuOptions = new OptionsMaker("id", "name").make(res.data?.rows, [
-        "type",
+        "type"
       ]);
       this.menuOptions = menuOptions || [];
     },

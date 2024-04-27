@@ -1,8 +1,9 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 Vue.use(Router)
-import { getToken } from '@/utils/auth' // get token from cookie
-import { iterateRecursively } from '@/utils/recursive'
+import { getToken, getPermissions } from '@/utils/auth' // get token from cookie
+import { filterRecursively } from '@/utils/recursive'
+import { convertMenuToRoutes, syncRoutesComponent } from "@/utils/route"
 import NProgress from 'nprogress' // progress bar
 import 'nprogress/nprogress.css' // progress bar style
 
@@ -12,19 +13,8 @@ import { constantRoutes, dynamicRoutes, constantTailRoutes } from './routes'
 
 export const wholeRoutes = constantRoutes.concat(dynamicRoutes);
 
-//route的component异步获取函数，转化成具体的组件
-(function calculate() {
-    for (let i = 0; i < arguments.length; i++) {
-        iterateRecursively(arguments[i], (route) => {
-            if (typeof route.component == 'function') {
-                route.component().then(_component => {
-                    route.component = _component.default
-                })
-            }
-        })
-    }
-})(constantRoutes, dynamicRoutes)
 
+syncRoutesComponent(constantRoutes, dynamicRoutes)
 
 const createRouter = (accessedRoutes = constantRoutes) => new Router({
     // mode: 'history', // require service support
@@ -120,12 +110,22 @@ function filterAsyncRoutes(routes, permissions) {
 export const accessedRoutes = []
 
 // Detail see: https://github.com/vuejs/vue-router/issues/1234#issuecomment-357941465
-export function resetRouter(permissions = []) {
-    let _accessedRoutes = filterAsyncRoutes(dynamicRoutes, permissions)
+export function resetRouter(menu = []) {
+    let permissions = getPermissions()
+    let _accessedRoutes = []
+    if(menu.length > 0) {
+        menu = filterRecursively.apply(menu, [
+            (menuItem) => menuItem.type != "ExternalLink"
+        ])
+        let routes = convertMenuToRoutes(menu);
+        syncRoutesComponent(routes)
+        _accessedRoutes = routes
+    }else {
+        _accessedRoutes = filterAsyncRoutes(dynamicRoutes, permissions)
+    }
     _accessedRoutes = constantRoutes.concat(_accessedRoutes)
     const newRouter = createRouter(_accessedRoutes)
     router.matcher = newRouter.matcher // reset router
-
     accessedRoutes.splice(0, accessedRoutes.length)
     _accessedRoutes.forEach(route => {
         accessedRoutes.push(route)

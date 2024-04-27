@@ -1,9 +1,9 @@
 import { convertApis } from "@/utils/api";
 import * as userApis from "@/apis/auth/user";
-let { login, logout, getInfo, getMenu } = convertApis(userApis)
-import { getToken, setToken, removeToken } from "@/utils/auth";
+let { login, logout, getMenu } = convertApis(userApis)
+import { getToken, setToken, getRoles, setRoles, getPermissions, setPermissions, removeAuthorities } from "@/utils/auth";
 import { convertRoutesToMenu } from "@/utils/route";
-import {iterateRecursively} from '@/utils/recursive'
+import { iterateRecursively } from '@/utils/recursive'
 import request from "@/utils/request";
 
 function getRouter() {
@@ -12,8 +12,8 @@ function getRouter() {
 
 const state = {
   token: getToken(),
-  roles: [],
-  permissions: [],
+  roles: getRoles(),
+  permissions: getPermissions(),
   menu: [],
   accessedRoutes: [],
 };
@@ -30,15 +30,15 @@ const getters = {
 };
 
 const mutations = {
-  SET_TOKEN: (state, token) => {
-    state.token = token;
-  },
-  SET_ROLES: (state, roles) => {
-    state.roles = roles;
-  },
-  SET_PERMISSIONS: (state, permissions) => {
-    state.permissions = permissions;
-  },
+  // SET_TOKEN: (state, token) => {
+  //   state.token = token;
+  // },
+  // SET_ROLES: (state, roles) => {
+  //   state.roles = roles;
+  // },
+  // SET_PERMISSIONS: (state, permissions) => {
+  //   state.permissions = permissions;
+  // },
   SET_ACCESSED_ROUTES: (state, accessedRoutes) => {
     state.accessedRoutes = accessedRoutes;
   },
@@ -49,13 +49,14 @@ const mutations = {
 
 const actions = {
   // 登录
-  login({ commit }, { username, password, code, cacheKey }) {
+  login(context, { username, password, code, cacheKey }) {
     username = username.trim();
     return new Promise((resolve, reject) => {
       request(login(username, password, code, cacheKey))
         .then((res) => {
           setToken(res.access_token);
-          commit("SET_TOKEN", res.access_token);
+          setRoles(res.roles);
+          setPermissions(res.permissions);
           resolve(res);
         })
         .catch((error) => {
@@ -64,56 +65,55 @@ const actions = {
     });
   },
   // 退出系统
-  logout({ commit }) {
+  logout() {
     return new Promise((resolve) => {
       request(logout)
         .then(() => {
-          commit("SET_TOKEN", "");
-          commit("SET_ROLES", []);
-          commit("SET_PERMISSIONS", []);
-          removeToken();
+          removeAuthorities();
           resolve();
         })
         .catch(() => {
-          commit("SET_TOKEN", "");
-          commit("SET_ROLES", []);
-          commit("SET_PERMISSIONS", []);
-          removeToken();
+          removeAuthorities();
           resolve();
         });
     });
   },
-  authenticate({ commit, dispatch }) {
-    request(getInfo).then((res) => {
-      commit("SET_ROLES", res.data.roleNames);
-      let userPermissionCodes = res.data.permissionCodes;
-      commit("SET_PERMISSIONS", userPermissionCodes);
+  // authenticate({ state, commit, dispatch }) {
+  //   getRouter().then((module) => {
+  //     module.resetRouter(state.permissions);
+  //     commit("SET_ACCESSED_ROUTES", module.accessedRoutes);
+  //   });
+  //   dispatch("loadMenu");
+  // },
+  loadMenu({ state, commit }) {
+    new Promise((resolve) => {
+      if (state.menu.length > 0) {
+        resolve(state.menu);
+      } else {
+        request(getMenu).then((res) => {
+          let menu = res?.data?.rows || [];
+          iterateRecursively(menu, (menuItem) => {
+            if(menuItem.type == 'ExternalLink') {
+              menuItem.path = '-'
+            }
+            menuItem.meta = {
+              title: menuItem.title,
+              icon: menuItem.icon,
+              affix: true
+            }
+          })
+          commit("SET_MENU", menu);
+          resolve(menu);
+        }).catch(error => {
+          console.error('获取菜单失败:', error.message || error.msg || error)
+        });
+      }
+    }).then(menu => {
       getRouter().then((module) => {
-        module.resetRouter(userPermissionCodes);
+        module.resetRouter(menu);
         commit("SET_ACCESSED_ROUTES", module.accessedRoutes);
       });
-    }).catch(error => {
-      console.error('鉴权失败:' ,error.message || error.msg || error)
     })
-    dispatch("loadMenu");
-  },
-  loadMenu({ commit }) {
-    return new Promise((resolve) => {
-      request(getMenu).then((res) => {
-        let menu = res?.data?.rows || [];
-        iterateRecursively(menu, (menuItem) => {
-          menuItem.meta = {
-            title: menuItem.title,
-            icon: menuItem.icon,
-            affix: true
-          }
-        })
-        commit("SET_MENU", menu);
-        resolve(menu);
-      }).catch(error => {
-        console.error('获取菜单失败:' ,error.message || error.msg || error)
-      });
-    });
   },
 };
 

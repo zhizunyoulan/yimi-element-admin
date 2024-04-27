@@ -1,5 +1,6 @@
 import Dashboard from '@/views/home/dashboard'
 import VeaLayout from '@/layouts/vue-element-admin'
+import DirectNestRoute from '@/components/DirectNestRoute'
 import Login from '@/views/login.vue'
 
 
@@ -73,9 +74,31 @@ export const dynamicRoutes = [
         children: [
             {
                 path: 'table',
-                component: () => import('@/views/demos/yi-table'),
+                component: DirectNestRoute,
                 name: '表格',
-                meta: { title: '表格', affix: false, icon: 'table' }
+                meta: { title: '表格', affix: false, icon: 'table' },
+                children: [
+                    {
+                        path: 'table-01',
+                        name: '表格-1',
+                        component: () => import('@/views/demos/yi-table/samples/table-01'),
+                    },
+                    {
+                        path: 'table-02',
+                        name: '表格-2',
+                        component: () => import('@/views/demos/yi-table/samples/table-02'),
+                    },
+                    {
+                        path: 'table-03',
+                        name: '表格-3',
+                        component: () => import('@/views/demos/yi-table/samples/table-03'),
+                    },
+                    {
+                        path: 'table-04',
+                        name: '表格-4',
+                        component: () => import('@/views/demos/yi-table/samples/table-04'),
+                    }
+                ]
             },
             {
                 path: 'action',
