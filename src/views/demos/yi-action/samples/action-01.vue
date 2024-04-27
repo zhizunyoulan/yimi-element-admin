@@ -26,7 +26,7 @@
     }"
   >
     <template #default="{ model }">
-        <el-form :model="model" inline label-position="right" label-width="85px">
+        <el-form :model="model" label-position="right" label-width="85px">
             <el-row>
                 <el-col :span="12">
                     <el-form-item label="用户名" prop="username" required>
